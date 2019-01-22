@@ -10,13 +10,15 @@ import java.lang.reflect.Proxy;
  * Created by tao.li on 2019/1/20.
  */
 public class AMSHookHelper {
+
+  public static final String TAG = "AMSHookHelper";
   public static final String EXTRA_TARGET_INTENT = "IActivityManagerHandler";
 
   public static void hookAms() {
     try {
-      Class<?> activityManagerNativeClass = Class.forName("android.app.ActivityManagerNative");
+      Class<?> activityManagerNativeClass = Class.forName("android.app.ActivityManager");
 
-      Field gDefaultField = activityManagerNativeClass.getDeclaredField("gDefault");
+      Field gDefaultField = activityManagerNativeClass.getDeclaredField("IActivityManagerSingleton");
       gDefaultField.setAccessible(true);
 
       Object gDefault = gDefaultField.get(null);
@@ -31,11 +33,11 @@ public class AMSHookHelper {
         new Class<?>[]{iActivityManagerInterface}, new IActivityManagerHandler(rawIActivityManager));
       mInstanceField.set(gDefault, proxy);
     } catch (ClassNotFoundException e) {
-      Log.e("MainActivity", "", e);
+      Log.e(TAG, "", e);
     } catch (IllegalAccessException e) {
-      Log.e("MainActivity", "", e);
+      Log.e(TAG, "", e);
     } catch (NoSuchFieldException e) {
-      Log.e("MainActivity", "", e);
+      Log.e(TAG, "", e);
     }
   }
 

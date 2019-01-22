@@ -8,12 +8,12 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import static com.talbot.plugintest.AMSHookHelper.EXTRA_TARGET_INTENT;
+import static com.talbot.plugintest.AMSHookHelper.TAG;
 
 /**
  * Created by tao.li on 2019/1/20.
  */
 class IActivityManagerHandler implements InvocationHandler {
-  public static final String TAG = "IActivityManagerHandler";
 
 
 
@@ -38,7 +38,7 @@ class IActivityManagerHandler implements InvocationHandler {
       }
       raw = (Intent) args[index];
       Intent newIntent = new Intent();
-      String stubPackage = "com.test.app";
+      String stubPackage = "com.talbot.plugintest";
 
       ComponentName componentName = new ComponentName(stubPackage, Main3Activity.class.getName());
       newIntent.setComponent(componentName);
